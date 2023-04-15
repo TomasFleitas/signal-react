@@ -100,9 +100,8 @@ export class Signal {
   }
 
   getSelectors() {
-    return Object.keys(Object.getOwnPropertyDescriptors(this)).filter(
-      (prop) => descriptors[prop].get,
-    );
+    const descriptors = Object.getOwnPropertyDescriptors(this);
+    return Object.keys(descriptors).filter((prop) => descriptors[prop].get);
   }
 
   get value() {
