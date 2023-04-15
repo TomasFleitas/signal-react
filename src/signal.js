@@ -2,11 +2,12 @@ import React from 'react';
 
 const NOT_ALLOW = ['value'];
 
-const defineProp = (ctx, p, getFn, setFn) =>
+const defineProp = (ctx, p, getFn, setFn) => {
   Object.defineProperty(ctx, p, {
     get: getFn,
     set: setFn,
   });
+};
 
 const getStateByString = (selectrosString, state) =>
   selectrosString.split('.').reduce((prev, path) => prev?.[path], state);
@@ -25,6 +26,7 @@ const setNestedProperty = (obj, propertyChain, value) => {
     obj[propName] = obj[propName] || {};
     setNestedProperty(obj[propName], propertyNames.slice(1).join('.'), value);
   }
+
   return obj;
 };
 
@@ -52,6 +54,7 @@ const defineSelectors = (selectors, ctx) => {
 export class Signal {
   s = [];
   eqFn;
+
   constructor(initState, opts) {
     this.initState = initState;
     this.eqFn = opts?.equalityFn || ((a, b) => a === b);
@@ -92,6 +95,7 @@ export class Signal {
   }
 
   deleteSelector(name) {
+    if (NOT_ALLOW.includes(name)) throw new Error('Not allowed');
     delete this[name];
   }
 
@@ -101,7 +105,9 @@ export class Signal {
 
   getSelectors() {
     const descriptors = Object.getOwnPropertyDescriptors(this);
-    return Object.keys(descriptors).filter((prop) => descriptors[prop].get);
+    return Object.keys(Object.getOwnPropertyDescriptors(this)).filter(
+      (prop) => descriptors[prop].get,
+    );
   }
 
   get value() {
