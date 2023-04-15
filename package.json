@@ -1,0 +1,11 @@
+{
+  "name": "signal-react",
+  "version": "1.0.0",
+  "description": "A library to send signals beetween components",
+  "main": "index.js",
+  "author": "Tomás Fleitas",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^18.2.0"
+  }
+}
