@@ -214,7 +214,7 @@ const Component = memo(() =>{
   
   return (
     <>
-      {signal1.value} /**Hook 1/
+      {signal1.value} /*Hook 1*/
       <Child1 signal={signal1}/>
       <Child2 signal={signal2}/>
     </>
