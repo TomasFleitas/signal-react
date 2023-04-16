@@ -1,9 +1,9 @@
 
 # signal-react
 
-Esta es una libreria para enviar "señales" (cambios de estados) entre componentes, sin importar la jerarquica de los mismos.
+This is a library for sending "signals" (state changes) between components, regardless of their hierarchical position.
 
-### Instalación
+### Installation
 
 ```cmd
 npm i signal-react
@@ -11,24 +11,24 @@ npm i signal-react
 
 
 ### Hook
-En cada componente de react se puede utilizar un hook llamado _useSignal_ al cual se le puede pasar por parametro el valor del estado inicial, tal como _useState()_, la diferencia con este ultimo es que _useSignal_ NO debe ser destructurado en array.
+In each React component, you can use a hook called _useSignal_, to which you can pass the initial state value as a parameter, just like useState(). The difference with the latter is that _useSignal_ should NOT be destructured in an array.
 
-### Configuración
+### Configuration
 
-Para usar el hook _useSignal_ se puede usar de forma basica pasando un valor o un objeto de configuracion.
+To use the _useSignal_ hook, you can use it in a basic way by passing a value or a configuration object.
 
-#### Basico
+#### Basic
 ```jsx
 const signal = useSignal(0);
 const signal = useSignal({});
 ```
 
-#### Objeto de configuración
+#### Configuration object
 
 ```jsx
 const config = {
-  initState: {/* estado inicial */},
-  opts: { /*opts is optional*/
+  initState: {/* initial state */},
+  opts: { /* opts is optional */
     selectors: [
       { name: 'example1', path: 'example1.obj.obj.value' },
       { name: 'example2', path: 'example2' },
@@ -38,65 +38,52 @@ const config = {
   },
 };
 ```
-* El valor de **initState** es el valor inicial del estado.
-* El valor de **opts** permite agregar configuraciones para manejar de mejor manera el estado. Agregando "selectores" permite **acceder** y **modificar** directamente un valor del esatdo. Tambien, **opcionalmente** podemos agregar una funcion para modificar la funcion de comparacion global por default.
+* The value of **initState** is the initial state value.
+* The value of **opts** allows you to add configurations to better manage the state. By adding "selectors", you can **access** and **modify** a value directly from the state. Additionally, you can **optionally** add a function to modify the default global comparison function.
 
-Cada selector cuenta con un **name** que será el identificador del  **setter** y **getter** ( _signal.name_ ). El **path** permite apuntar directamente a un valor dentro del estado.
+Each selector has a **name** that will be the identifier of the **setter** and **getter** (_signal.name_). The **path** allows you to point directly to a value within the state.
 
-Cada selector se le puede agregar un **equalityFn** para modificar la funcion de comparacion de cada selector por default que es **a===b**.
+Each selector can be added an **equalityFn** to modify the default comparison function for each selector, which is **a===b**.
 
 ```jsx
  { name: 'example3', path: 'example3', equalityFn: (a,b)=> a.value === b.value },
 ```
 
-"**Importancia del metodo de comparacion _equalityFn_, este metodo es el encargado de identificar si hubo o no cambio de estado, si lo hubo, se disparará el re-render**"
+"**Importance of the comparison method 'equalityFn', this method is responsible for identifying whether there was a state change or not, if there was, a re-render will be triggered.**"
 
-### Metodos de signal
+### Signal Methods
 
-Puedes utilizar los siguientes metodos por cada signal creado.
+You can use the following methods for each created signal.
 
 ```jsx
 const signal = useSignal({});
 ```
 #### ------ Getter ------
 
-Estos son los metodos para obtener valores del estado.
+These are the methods for getting values from the state.
 
-* **signal.value** 
-Cada signal por default cuenta con el metodo **value** que permite obtener el estado completo.
-* **signal.getValue()**
-Con el metodo getValue podemos obtener de igual manera el estado completo.
-* **signal.getValue((state)=> state.obj.data)**
-Podemos obtener el estado con utilizando una funcion callback para seleccionar un dato particular dentro del estado.
+* **signal.value** : each signal by default has the **value** method that allows you to get the complete state.
+* **signal.getValue()**: with the **getValue** method, we can get the complete state in the same way.
+* **signal.getValue((state)=> state.obj.data)**: we can obtain the state by using a callback function to select a particular data within the state.
+  
+*Optionally as a second parameter, we can send a function **equalityFn** to modify the comparison between state changes. getValue((state)=> state.obj.data, **(a,b) => a===b**).
+* **signal.getValue("obj.data")**: we can also use a **path** to select a data within the state.
 
-*Opcionalmente como segundo parametro podemos enviar una funcion **equalityFn** para modificar la comparacion entre cambios de estados. **getValue((state)=> state.obj.data, (a,b) => a===b)**.
-* **signal.getValue("obj.data")**
-Tambien podemos utilizar un **path** para seleccionar un dato 
-dentro del estado.
-
-*Opcionalmente como segundo parametro podemos enviar una funcion **equalityFn** para modificar la comparacion entre cambios de estados **getValue("obj.data", (a,b) => a===b)**.
-* **signal.customName**
-Por ultimo, si hemos configurado un selector, podemos utilizar el **name** que hemos configurado para obtener el valor del estado.
-
+*Optionally as a second parameter, we can send a function equalityFn to modify the comparison between state changes. getValue("obj.data", **(a,b) => a===b**).
+* **signal.customName**: Finally, if we have configured a selector, we can use the **name** we have configured to get the state value.
 #### ------ Setter ------
 
-* **signal.value = 1**
-Cada signal permite setear un nuevo estado por medio del mismo metodo **value**
-* **signal.value = (state)=> state + 1**
-Podemos utilizar una funcion callback para modificar de forma mas selectiva el estado.
-* **signal.setValue(1)**
-Podemos utilizar **setValue** para modificar el estado.
-* **signal.setValue((state)=> state + 1)**
-La misma funcion setValue nos permite utilizar callback para modificar el estado de forma mas selectiva.
-* **signal.customName = 1**
-Si hemos configurado un selector, podemos utilizar el **name** que hemos configurado para modificar el valor del estado.
-* **signal.customName = (customName)=> customName + 1**
-Tambien podemos utilizar una funcion callback para modificar el estado.
+* **signal.value = 1**: each signal allows you to set a new state through the same **value** method.
+* **signal.value = (state)=> state + 1**: we can use a callback function to selectively modify the state.
+* **signal.setValue(1)**: we can use **setValue** to modify the state.
+* **signal.setValue((state)=> state + 1)**: the same **setValue** function allows us to use a callback to selectively modify the state.
+* **signal.customName = 1**: if we have configured a selector, we can use the **name** we have configured to modify the value of the state.
+* **signal.customName = (customName)=> customName + 1**: we can also use a callback function to modify the state.
 
 
-## Ejemplos 1
+## Examples 1
 
-Uso basico en un componente de react, en este ejemplo, el componente padre mandará una señal al child y solo el child realizará un re-render.
+Basic usage in a React component, in this example, the parent component will send a signal to the child and only the child will re-render.
 
 ```jsx
 import { useSignal } from 'signal-react';
@@ -121,9 +108,9 @@ const Component = memo(() => {
 });
 ```
 
-## Ejemplos 2
+## Examples 2
 
-En este caso el componente hijo mandará una señal al padre, y solo el padre realizará un re-render, obviamente, debemos colocar **memo** para no propagar hacia el child el renderizado.
+In this case, the child component will send a signal to the parent, and only the parent will re-render. We must use **memo** to avoid propagating the render to the child.
 
 ```jsx
 const Child = memo(({ signal }) => {
@@ -152,9 +139,9 @@ const Component = memo(() => {
 ```
 
 
-### Uso de clase Signal
+### Using the Signal class
 
-Podemos utilizar directamente la clase Signal para el manejo del estado, de esta manera, podriamos evitar el uso de **useContext** para contar con el mismo estado y metodos en diferentes componentes children del contexto.
+We can use the Signal class directly to handle state, this way we could avoid using **useContext** to have the same state and methods in different child components of the context.
 
 ```jsx
 const signalInstance = new Signal(config.initState, config.opts);
@@ -164,7 +151,8 @@ const Component = memo(() =>{
 });
 ```
 
-Tambien podemos utilizar la misma instancia para inicializar _useSignal_.
+We can also use the same instance to initialize _useSignal_
+
 
 ```jsx
 const signalInstance = new Signal(config.initState, config.opts);
@@ -176,7 +164,7 @@ const Component = memo(() =>{
 });
 ```
 
-o podemos pasar la instancia de un signal a otros hooks para manejar el mismo estado.
+Or we can pass the instance of a signal to other hooks to handle the same state.
 
 ```jsx
 const signalInstance = new Signal(config.initState, config.opts);
@@ -206,9 +194,9 @@ const Child2 = memo(() =>{
 });
 ```
 
-De esta manera todos los _useSignal_ manejaran el mismo estado y todos estaran "conectados" entre si.
+This way all the _useSignal_ will handle the same state, and all of them will be "connected" to each other.
 
-Si no queremos utilizar la clase Signal, podemos conectar diferentes hooks de esta manera.
+If we don't want to use the Signal class, we can connect different hooks in this way.
 
 ```jsx
 const Component = memo(() =>{
