@@ -5,6 +5,11 @@
   "main": "index.js",
   "author": "Tomás Fleitas",
   "license": "ISC",
+  "homepage": "https://github.com/TomasFleitas/signal-react",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TomasFleitas/signal-react"
+  },
   "dependencies": {
     "react": "^18.2.0"
   }
