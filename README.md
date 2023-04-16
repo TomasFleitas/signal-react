@@ -58,6 +58,15 @@ You can use the following methods for each created signal.
 ```jsx
 const signal = useSignal({});
 ```
+#### ------ Config -----
+Methods for setting selectors.  
+
+* signal.getSelectors(): returns an array with the names of all created selectors.
+
+* signal.addSelectors([{ name: 'example2', path: 'example2' }]): adds selectors to the signal.
+
+* signal.deleteSelector("name"): removes a selector.
+
 #### ------ Getter ------
 
 These are the methods for getting values from the state.
