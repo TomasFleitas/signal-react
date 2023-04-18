@@ -1,15 +1,28 @@
 {
   "name": "signal-react",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A library to send signals between components",
   "main": "index.js",
   "author": "Tomás Fleitas",
-  "license": "ISC",
+  "license": "MIT",
   "homepage": "https://github.com/TomasFleitas/signal-react",
   "repository": {
     "type": "git",
     "url": "https://github.com/TomasFleitas/signal-react"
   },
+  "keywords": [
+    "signal",
+    "react",
+    "signal-react",
+    "react-signal",
+    "render",
+    "re-render",
+    "rerender",
+    "between components",
+    "components render",
+    "components comunication",
+    "components signals"
+  ],
   "dependencies": {
     "react": "^18.2.0"
   }
