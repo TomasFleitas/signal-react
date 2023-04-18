@@ -1,6 +1,6 @@
 {
   "name": "signal-react",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A library to send signals between components",
   "main": "index.js",
   "author": "Tomás Fleitas",
